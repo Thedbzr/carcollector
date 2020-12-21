@@ -41,6 +41,49 @@
     </table>
   </div>
 </div>
+<hr>
+<div class="row">
+  <div class="col s6">
+    <h3>{{ cat.name }}'s Toys</h3>
+    {% if cat.toys.count %}
+    {% for toy in cat.toys.all %}
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title">
+          A <span style="color: {{ toy.color }}">{{ toy.color }}</span> {{ toy.name }}
+        </span>
+      </div>
+    </div>
+    {% endfor %}
+    {% else %}
+    <h5>No Toys :(</h5>
+    {% endif %}
+  </div>
+  <!-- Available toys will come after this line -->
+  <div class="col s6">
+    <h3>Available Mods</h3>
+    {% if mods.count %}
+    {% for mod in mods.all %}
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title">{{ mod.brand }}</span>
+        <p>Description: {{ mod.description }}</p>
+        <hr>
+        <p>Category: {{mod.category}} </p>
+      </div>
+      <div class="card-action">
+        <form action="{% url 'assoc_mod' car.id mod.id %}" method="post">
+          {% csrf_token %}
+        <button type="submit" class="btn">Add</button>
+      </form>
+      </div>
+    </div>
+    {% endfor %}
+    {% else %}
+    <h5>{{car.name}} Already Has All Mods Available</h5>
+    {% endif %}
+  </div>
+</div>
 <script>
   const dateEl = document.getElementById('id_date');
   M.Datepicker.init(dateEl, {

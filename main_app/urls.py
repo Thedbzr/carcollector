@@ -9,7 +9,8 @@ urlpatterns = [
   path('cars/create/', views.CarCreate.as_view(), name='cars_create'),
   path('cars/<int:pk>/update/', views.CarUpdate.as_view(), name='cars_update'),
   path('cars/<int:pk>/delete/', views.CarDelete.as_view(), name='cars_delete'), 
-  # associate a mod with a cat (M:M)
+  path('cars/<int:car_id>/add_tuneup/', views.add_tuneup, name='add_tuneup'),
+  # associate a mod with a car (M:M)
   path('cars/<int:car_id>/assoc_mod/<int:mod_id>/', views.assoc_mod, name="assoc_mod"),
   path('mods/' , views.ModList.as_view(), name='mods_index'),
   path('mods/<int:pk>/', views.ModDetail.as_view(), name='mods_detail'),

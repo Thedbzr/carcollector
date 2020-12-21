@@ -20,7 +20,7 @@ class Mod(models.Model):
         return self.description
     
     def get_absolute_url(self):
-        return reverse('mods_detail', kwargs='pk': self.id)
+        return reverse('mods_detail', kwargs={'pk': self.id})
 
 
 # Create your models here.

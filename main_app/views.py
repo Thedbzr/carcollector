@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render , redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from .models import Car
+from django.views.generic import ListView, DetailView
+from .models import Car , Mod
 from .forms import TuneupForm
 
 
@@ -19,6 +20,22 @@ def cars_details(request, car_id):
     'car': car ,
     'tuneup_form': tuneup_form
     })
+def add_tuneup(request, car_id):
+	# create the ModelForm using the data in request.POST
+  form = TuneupForm(request.POST)
+  # validate the form
+  if form.is_valid():
+    # don't save the form to the db until it
+    # has the car_id assigned
+    new_service = form.save(commit=False)
+    new_service.car_id = car_id
+    new_service.save()
+  return redirect('detail', car_id=car_id)
+
+def assoc_mod(request, car_id, mod_id):
+  # Note that you can pass a mod's id instead of the whole object
+  Car.objects.get(id=car_id).mods.add(mod_id)
+  return redirect('detail', car_id=car_id)
 
 class CarCreate(CreateView):
   model = Car
@@ -29,3 +46,21 @@ class CarUpdate(UpdateView):
 class CarDelete(DeleteView):
   model = Car
   success_url = '/cars/'
+
+class ModList(ListView):
+  model = Mod
+
+class ModDetail(DetailView):
+  model = Mod
+
+class ModCreate(CreateView):
+  model = Mod
+  fields = '__all__'
+
+class ModUpdate(UpdateView):
+  model = Mod
+  fields = '__all__'
+
+class ModDelete(DeleteView):
+  model = Mod
+  success_url = '/mods/'
