@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>Toy List</h1>
+<h1>Mod List</h1>
 
 {% for mod in mod_list %}
   <a href="{% url 'mods_detail' mod.id %}">
