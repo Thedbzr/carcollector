@@ -47,7 +47,7 @@ def assoc_mod(request, car_id, mod_id):
 
 class CarCreate(CreateView):
   model = Car
-  fields = '__all__'
+  fields = ['year', 'make', 'model', 'engine', 'vin']
 class CarUpdate(UpdateView):
   model = Car
   fields = ['engine']
